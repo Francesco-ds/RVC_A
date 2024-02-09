@@ -4,6 +4,7 @@ function [time,q,dq,ddq,dddq,ddddq] = trapezoidal_given_tc_ti_is_zero(ti,tc,tf,s
 % ti != 0
 delta = ti;
 tf = tf-ti;
+tc = tc-ti;
 ti = 0;
 
 %check on tc value
