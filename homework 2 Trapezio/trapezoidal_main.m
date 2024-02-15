@@ -101,22 +101,22 @@ ddqc = 35;
 title_graph = sprintf('Trapezoidal with \n ti=%0.f,dqc=%.0f,ddqc=%.0f,qi=%.0f,qf=%.0f',ti,dqc,ddqc,qi,qf);
 plot_trajectories(3,title_graph,time,q,dq,ddq);
 
-%% case ti not zero dqi != 0 qf != 0 ddqi ddqf = 0 (qf > qi) is generic and used in the next 2 examples
-clear all
-qi = 25;
-qf = 100;
-ta = 1.5;
-td = 2;
-ti = 0;
-tf = 10;
-dqi = 3;
-dqf = 7;
-dqc = 15;
-st = 0.01;
-[time,q,dq,ddq,~,~] = trapezoidal_lot_of_params(qi,qf,ta,td,ti,tf,dqi,dqf,st,dqc);
-title_graph = sprintf('Trapezoidal with \n ti=%0.f,tf=%.0f,ta=%.1f,td=%.0f,dqc=%.0f,qi=%.0f,qf=%.0f,dqi=%.0f,dqf=%.0f',ti,tf,ta,td,dqc,qi,qf,dqi,dqf);
-%title_graph = sprintf('Trapezoidal with \n ti=0,dqc=%.0f,ddqc=%.0f,qi=%.0f,qf=%.0f',dqc,ddqc,qi,qf)
-plot_trajectories(3,title_graph,time,q,dq,ddq);
+% %% case ti not zero dqi != 0 qf != 0 ddqi ddqf = 0 (qf > qi) is generic and used in the next 2 examples
+% clear all
+% qi = 25;
+% qf = 100;
+% ta = 1.5;
+% td = 2;
+% ti = 0;
+% tf = 10;
+% dqi = 3;
+% dqf = 7;
+% dqc = 15;
+% st = 0.01;
+% [time,q,dq,ddq,~,~] = trapezoidal_lot_of_params(qi,qf,ta,td,ti,tf,dqi,dqf,st,dqc);
+% title_graph = sprintf('Trapezoidal with \n ti=%0.f,tf=%.0f,ta=%.1f,td=%.0f,dqc=%.0f,qi=%.0f,qf=%.0f,dqi=%.0f,dqf=%.0f',ti,tf,ta,td,dqc,qi,qf,dqi,dqf);
+% %title_graph = sprintf('Trapezoidal with \n ti=0,dqc=%.0f,ddqc=%.0f,qi=%.0f,qf=%.0f',dqc,ddqc,qi,qf)
+% plot_trajectories(3,title_graph,time,q,dq,ddq);
 
 %% case A: DT and ddqc max
 clear all
@@ -146,6 +146,17 @@ ddqcmax = 10;
 dqcmax = 15; % put dqcmax = 20 to see the case in which the maximum velocity is not reached
 [time,q,dq,ddq,dddq,ddddq] = trapezoidal_ddqcmax_dqcmax(qi,qf,st,ti,dqi,dqf,dqcmax,ddqcmax);
 title_graph = sprintf('Trapezoidal with \n ti=%0.f,qi =%.0f,qf=%.0f,dqi=%.0f,dqf=%.0f,dqcmax=%0.f,ddqcmax =%0.f%',ti,qi,qf,dqi,dqf,dqcmax,ddqcmax);
+plot_trajectories(3,title_graph,time,q,dq,ddq);
+
+%% multipoint
+clear all;
+qk = [0 15 10 15 5];
+tk = [0 5 10 15 20];
+ddqcmax = 100;
+dqcmax = 20;
+st = 0.01;
+[time,q,dq,ddq] = trapezoidal_multipoint(qk,st,tk,ddqcmax,dqcmax);
+title_graph = sprintf('multipoint');
 plot_trajectories(3,title_graph,time,q,dq,ddq);
 
 
