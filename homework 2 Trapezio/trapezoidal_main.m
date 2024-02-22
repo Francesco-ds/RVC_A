@@ -148,15 +148,30 @@ dqcmax = 15; % put dqcmax = 20 to see the case in which the maximum velocity is 
 title_graph = sprintf('Trapezoidal with \n ti=%0.f,qi =%.0f,qf=%.0f,dqi=%.0f,dqf=%.0f,dqcmax=%0.f,ddqcmax =%0.f%',ti,qi,qf,dqi,dqf,dqcmax,ddqcmax);
 plot_trajectories(3,title_graph,time,q,dq,ddq);
 
-%% multipoint
+%% multipoint with no respected tk
 clear all;
-qk = [0 15 10 15 5];
-tk = [0 5 10 15 20];
+close;
+qk = [0 150 -120 225 -10];
+tk = [0 10 20 30 40];
 ddqcmax = 100;
-dqcmax = 20;
+dqcmax = 75;
 st = 0.01;
-[time,q,dq,ddq] = trapezoidal_multipoint(qk,st,tk,ddqcmax,dqcmax);
-title_graph = sprintf('multipoint');
-plot_trajectories(3,title_graph,time,q,dq,ddq);
+[time,q,dq,ddq,new_tk] = trapezoidal_multipoint(qk,st,tk,ddqcmax,dqcmax);
+new_tk = [tk(1) new_tk];
+title_graph = sprintf('Multipoints  with dqcmax = 75');
+plot_trajectories_qk_no_tk(3,title_graph,time,q,dq,ddq,qk,new_tk);
+
+%% multipoint with respected tk but not dqcmax
+clear all;
+close;
+qk = [0 150 -120 225 -10];
+tk = [0 10 20 30 40];
+ddqcmax = 20;
+dqcmax = 10;
+st = 0.01;
+[time,q,dq,ddq] = trapezoidal_multipoint_tk(qk,st,tk,ddqcmax,dqcmax);
+title_graph = sprintf('Multipoints with correct tk');
+plot_trajectories_qk(3,title_graph,time,q,dq,ddq,qk,tk);
+
 
 

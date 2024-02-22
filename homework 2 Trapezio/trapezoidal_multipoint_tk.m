@@ -1,7 +1,6 @@
-function [time_fin,q_fin,dq_fin,ddq_fin,new_tk] = trapezoidal_multipoint(qk,st,tk,ddqcmax,dqcmax)
+function [time_fin,q_fin,dq_fin,ddq_fin] = trapezoidal_multipoint_tk(qk,st,tk,ddqcmax,dqcmax)
 %final values
 time_fin = [];
-new_tk = [];
 q_fin = [];
 dq_fin = [];
 ddq_fin = [];
@@ -30,9 +29,10 @@ for i = 1:size(qk,2)-1
 
 
     ti = prev_tf;
-    [time,q,dq,ddq,dddq,ddddq,tf] = trapezoidal_ddqcmax_dqcmax_with_tf(qi,qf,st,ti,dqi,dqf,dqcmax,ddqcmax);
-    prev_tf = tf;
-    new_tk = [new_tk tf];
+    DT = tk(i+1) - ti;
+    [time,q,dq,ddq,~,~] = trapezoidal_ddqcmax_DT(qi,qf,st,ti,DT,dqi,dqf,ddqcmax);
+    prev_tf = ti + DT;
+    
     time_fin = [time_fin,time];
     q_fin = [q_fin,q];
     dq_fin = [dq_fin,dq];
